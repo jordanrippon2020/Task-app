@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Task Tracker</h1>
+
+    <form action="{{ url_for('add_task_route') }}" method="POST">
+        <input type="text" name="task_text" placeholder="Enter a new task" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <h2>Current Tasks</h2>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            {% if task.completed %}
+                <span class="task-text completed">{{ task.text }}</span> <span class="completed-status">(Completed)</span>
+            {% else %}
+                <span class="task-text">{{ task.text }}</span>
+                <a href="{{ url_for('complete_task_route', task_id=task.id) }}" class="complete-link">Complete</a>
+            {% endif %}
+            <a href="{{ url_for('delete_task_route', task_id=task.id) }}" class="delete-link">Delete</a>
+        </li>
+        {% else %}
+        <li>No tasks yet. Add one above!</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
