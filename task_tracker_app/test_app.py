@@ -32,6 +32,16 @@ class TestTaskApp(unittest.TestCase):
         self.assertEqual(added_task_2['id'], 2)
         self.assertEqual(task_app_module.task_id_counter, 3)
 
+    def test_add_task_with_due_date(self):
+        """Ensure a task can be scheduled for a later date."""
+        task_text = "Task with due date"
+        due_date = "2024-12-31"
+        added_task = task_app_module.add_task(task_text, due_date)
+
+        self.assertEqual(added_task['text'], task_text)
+        self.assertEqual(added_task['due_date'], due_date)
+        self.assertEqual(task_app_module.tasks[0]['due_date'], due_date)
+
 
     def test_get_all_tasks(self):
         """Test retrieving all tasks."""
