@@ -1,6 +1,6 @@
 import unittest
 # Important: import the app module itself to access its global variables
-import app as task_app_module 
+from task_tracker_app import app as task_app_module
 
 class TestTaskApp(unittest.TestCase):
 
