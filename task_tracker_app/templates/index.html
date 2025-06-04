@@ -11,6 +11,7 @@
 
     <form action="{{ url_for('add_task_route') }}" method="POST">
         <input type="text" name="task_text" placeholder="Enter a new task" required>
+        <input type="date" name="due_date">
         <button type="submit">Add Task</button>
     </form>
 
@@ -23,6 +24,9 @@
             {% else %}
                 <span class="task-text">{{ task.text }}</span>
                 <a href="{{ url_for('complete_task_route', task_id=task.id) }}" class="complete-link">Complete</a>
+            {% endif %}
+            {% if task.due_date %}
+                <span class="due-date">(Due: {{ task.due_date }})</span>
             {% endif %}
             <a href="{{ url_for('delete_task_route', task_id=task.id) }}" class="delete-link">Delete</a>
         </li>

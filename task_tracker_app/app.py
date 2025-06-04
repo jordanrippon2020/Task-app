@@ -6,12 +6,22 @@ app = Flask(__name__)
 tasks = []
 task_id_counter = 1 # To generate unique task IDs
 
-def add_task(text):
-    """Adds a new task to the tasks list."""
+def add_task(text, due_date=None):
+    """Adds a new task to the tasks list.
+
+    Args:
+        text (str): The task description.
+        due_date (str, optional): Date the task is scheduled for in
+            ``YYYY-MM-DD`` format. Defaults to ``None``.
+
+    Returns:
+        dict: The task dictionary that was added.
+    """
     global task_id_counter
     new_task = {
         'id': task_id_counter,
         'text': text,
+        'due_date': due_date,
         'completed': False
     }
     tasks.append(new_task)
@@ -47,7 +57,8 @@ def index():
 def add_task_route():
     """Handles adding a new task."""
     task_text = request.form['task_text']
-    add_task(task_text)
+    due_date = request.form.get('due_date') or None
+    add_task(task_text, due_date)
     return redirect(url_for('index'))
 
 @app.route('/complete/<int:task_id>')
